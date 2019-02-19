@@ -3,17 +3,22 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.mockito.Mockito;
 
 import com.everis.bootcamp.tallerjunit.Articulo;
+import com.everis.bootcamp.tallerjunit.BaseDeDatosService;
 import com.everis.bootcamp.tallerjunit.CarritoCompraService;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CarritoCompraTest {
 	 CarritoCompraService service = new CarritoCompraService();
+	//MOCK
+	BaseDeDatosService mock;
 	
 	@Before
 	public void beforeClass() {
@@ -63,4 +68,42 @@ public class CarritoCompraTest {
 		service.limpiarCesta();
 		assertTrue(service.getArticulos().isEmpty());
 	}
+	
+	 
+			
+	@Before
+	public void setUp(){
+		System.out.println("Inicializamos el servicio");
+		service = new CarritoCompraService();
+		mock = Mockito.mock(BaseDeDatosService.class);
+		service.setBbddService(mock);
+	}
+	
+	
+	@Test
+	public void ejercicio1() {
+		Mockito.when(mock.findArticuloById(1)).thenReturn(new Articulo("MI MOCK", 10.0));
+		Double result = service.aplicarDescuento(1, 12.0);
+		System.out.println("El precio definitivo del articulo tras el descuento: " + result);
+	}
+	
+	@Test(expected = Exception.class)
+	public void ejercicio2() {
+		Mockito.when(mock.findArticuloById(1)).thenThrow(Exception.class);
+		Double result = service.aplicarDescuento(1, 12.0);
+		System.out.println("El precio definitivo del articulo tras el descuento: " + result);
+	}
+	
+	@Test
+	public void ejercicio3() {
+		//Stubbing (definir comportamiento)
+		Mockito.when(mock.findArticuloById(Mockito.eq(1))).thenReturn(new Articulo("ARTICULO", 10.0));
+		// Invocar al modulo de codigo que quiero probar
+		Double result = service.aplicarDescuento(1, 10.0);
+		System.out.println("El precio definitivo del articulo tras el descuento: " + result);
+		Assert.assertNotNull(result);
+		Assert.assertEquals(new Double(9.0), result);
+		Mockito.verify(mock, Mockito.times(1)).findArticuloById(Mockito.eq(1));
+	}
+
 }
