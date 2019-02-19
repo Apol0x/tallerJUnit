@@ -42,5 +42,4 @@ public class BaseDeDatosService {
 		storage.put(newId, art);
 		return newId;
 	}
-	
 }
