@@ -1,0 +1,39 @@
+los test unitarios son una forma de comprobar el correcto funcionamiento de nuestro 
+codigo
+con test unitarios podremos probar el correcto funcionamiento de una unidad de codigo
+
+
+caracteristicas 
+* automatizable
+* completas
+* repetibles
+* independientes
+
+limitaciones de los test unitarios:
+las pruebas unitarias do descubrian todos los posibles errores de una aplicacion
+
+que es JUnit
+Framework de java que nos permite construir Test unitarios
+Version actual: JUnit5
+
+caracteristicas
+sistemas de verificar resultados
+anotaciones para definir metodos de prueba
+anotaciones para definir metodos adicionales pre y post prueba
+controlar excepciones y tiempos de espera
+parametrizacion de datos
+diferentes runners para guiar la ejecucion de la prueba
+
+nuestro primer test
+. test class: clase java que contendra un conjunto de test methods. acaban con sufijo test
+. @Test anotacion que indica que un metodo es un caso de prueba.
+tienes que ser publicos , sin aprametros y devolver un void
+
+-- se pueden ejecutar con maven o Eclipse-JUnit plugin
+
+--tiempo de ejecucion
+primero se llamaría a la clase BeforeClass, luego al Test, y al final AfterClass
+
+ASERSIONES
+Uno de los puntos mas importantes de un test unitario es validar que la ejecucion de nuestra prueba es correcta.
+para esto usaremos los Asserts
